@@ -100,3 +100,7 @@ org.springframework.boot.sql.init.dependency.AnnotationDependsOnDatabaseInitiali
 org.springframework.boot.jdbc.SpringJdbcDependsOnDatabaseInitializationDetector,\
 org.springframework.boot.jooq.JooqDependsOnDatabaseInitializationDetector,\
 org.springframework.boot.orm.jpa.JpaDependsOnDatabaseInitializationDetector
+
+# AOT
+org.springframework.beans.factory.generator.AotContributingBeanFactoryPostProcessor= \
+org.springframework.boot.context.properties.ConfigurationPropertiesAotContributingBeanFactoryPostProcessor
