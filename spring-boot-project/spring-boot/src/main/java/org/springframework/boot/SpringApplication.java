@@ -246,6 +246,7 @@ public class SpringApplication {
 	 * @see #SpringApplication(ResourceLoader, Class...)
 	 * @see #setSources(Set)
 	 */
+	// 它实际上会构造一个SpringApplication的实例，并把我们的启动类作为参数传进去，然后运行它的run方法
 	public SpringApplication(Class<?>... primarySources) {
 		this(null, primarySources);
 	}
@@ -264,10 +265,17 @@ public class SpringApplication {
 	public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySources) {
 		this.resourceLoader = resourceLoader;
 		Assert.notNull(primarySources, "PrimarySources must not be null");
+		// 把启动类设置为属性存储起来
 		this.primarySources = new LinkedHashSet<>(Arrays.asList(primarySources));
+		// 设置应用类型是Standard还是Web
 		this.webApplicationType = WebApplicationType.deduceFromClasspath();
+		// 设置初始化器(Initializer),最后会调用这些初始化器
+		// 使用SpringFactoriesLoader在应用的classpath中查找并加载所有可用的ApplicationContextInitializer。
 		setInitializers((Collection) getSpringFactoriesInstances(ApplicationContextInitializer.class));
+		// 设置监听器(Listener)
+		// 使用SpringFactoriesLoader在应用的classpath中查找并加载所有可用的ApplicationListener。
 		setListeners((Collection) getSpringFactoriesInstances(ApplicationListener.class));
+		// 推断并设置main方法的定义类
 		this.mainApplicationClass = deduceMainApplicationClass();
 	}
 

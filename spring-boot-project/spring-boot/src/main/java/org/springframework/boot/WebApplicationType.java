@@ -57,7 +57,8 @@ public enum WebApplicationType {
 	private static final String SERVLET_APPLICATION_CONTEXT_CLASS = "org.springframework.web.context.WebApplicationContext";
 
 	private static final String REACTIVE_APPLICATION_CONTEXT_CLASS = "org.springframework.boot.web.reactive.context.ReactiveWebApplicationContext";
-
+    // 这里主要是通过类加载器判断`REACTIVE`相关的Class是否存在，如果不存在，
+	// 则web环境即为`SERVLET`类型。这里设置好web环境类型，在后面会根据类型初始化对应环境。
 	static WebApplicationType deduceFromClasspath() {
 		if (ClassUtils.isPresent(WEBFLUX_INDICATOR_CLASS, null) && !ClassUtils.isPresent(WEBMVC_INDICATOR_CLASS, null)
 				&& !ClassUtils.isPresent(JERSEY_INDICATOR_CLASS, null)) {
